@@ -3,8 +3,8 @@ import pandas as pd
 from PIL import Image
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-
-
+from collections import Counter
+from keras.models import Sequential
 from keras.models import load_model
 from sklearn.metrics import accuracy_score, classification_report
 
@@ -43,3 +43,22 @@ predicted_labels = label_encoder.inverse_transform(np.argmax(predictions, axis=1
 # Print actual and predicted waste types
 for image_path, actual_label, predicted_label in zip(test_df['image_path'], label_encoder.inverse_transform(test_df['label']), predicted_labels):
     print(f"Image: {image_path}, Actual Label: {actual_label}, Predicted Label: {predicted_label}")
+
+# Count the occurrences of each predicted label
+predicted_label_counts = Counter(predicted_labels)
+
+# Total number of predictions
+total_predictions = len(predicted_labels)
+print("Total predictions:", total_predictions)
+
+# Calculate the percentage of each class
+class_percentages = {label: (count, count / total_predictions * 100) for label, count in predicted_label_counts.items()}
+
+# Print the percentage of each class
+for label, percentage in class_percentages.items():
+    print(f"{label}: {percentage:.2f}%")
+
+
+# Print the count and percentage of each class
+#for label, (count, percentage) in class_percentages.items():
+#    print(f"{label}: Count: {count}, Percentage: {percentage:.2f}%")
