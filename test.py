@@ -34,7 +34,7 @@ test_images = np.array(test_images)
 
 
 # Load the Keras model
-model = load_model('OurModel.keras')
+model = load_model('model1.h5')
 predictions = model.predict(test_images)
 
 # Convert predictions to class labels
